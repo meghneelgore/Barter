@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:clickable="true"
+        android:hint="Click to select station"
+        android:id="@+id/txt_home_station"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Embarcadero"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#555555"
+        android:textSize="40dp"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:inputType="none"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="To"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:clickable="true"
+        android:hint="Click to select station"
+        android:id="@+id/txt_work_station"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Walnut Creek"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#555555"
+        android:textSize="40dp"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Backtracking Information"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="30dp"/>
+
+    <FrameLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/backtracking_information"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </FrameLayout>
+</LinearLayout>

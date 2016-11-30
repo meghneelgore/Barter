@@ -26,6 +26,10 @@ public class Station {
         return name;
     }
 
+    public String getAbbreviation() {
+        return abbr;
+    }
+
     @Element
     String name;
 
