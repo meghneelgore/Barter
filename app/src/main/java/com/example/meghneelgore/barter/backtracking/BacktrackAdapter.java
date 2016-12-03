@@ -1,7 +1,10 @@
 package com.example.meghneelgore.barter.backtracking;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.example.meghneelgore.barter.R;
@@ -28,7 +31,15 @@ import android.widget.TextView;
  */
 public class BacktrackAdapter extends RecyclerView.Adapter<BacktrackViewHolder> {
 
-    List<Backtrack> mBacktrackList = new ArrayList<>();
+    private List<Backtrack> mBacktrackList = new ArrayList<>();
+
+    private String timeFormat = "hh:mm a";
+    private SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat(timeFormat);
+
+
+    public BacktrackAdapter() {
+        getNewBacktrackInfo();
+    }
 
     static class Backtrack {
         String backtrackStation;
@@ -54,17 +65,35 @@ public class BacktrackAdapter extends RecyclerView.Adapter<BacktrackViewHolder> 
                 NetworkService service = retrofit.create(NetworkService.class);
                 Call<TripRoot> directTrips = service.getTrips("EMBR", "WCRK");
                 Call<TripRoot> oneBackTrips = service.getTrips("POWL", "WCRK");
+                Call<TripRoot> toOneBackTrips = service.getTrips("EMBR", "POWL");
+
 
                 try {
                     Response<TripRoot> directTripResponse = directTrips.execute();
                     Response<TripRoot> oneBackTripResponse = oneBackTrips.execute();
+                    Response<TripRoot> toOneBackTripResponse = toOneBackTrips.execute();
+
 
                     List<Trip> directList = directTripResponse.body().getSchedule().getTrips();
                     List<Trip> oneBackList = oneBackTripResponse.body().getSchedule().getTrips();
+                    List<Trip> toOneBackList = toOneBackTripResponse.body().getSchedule().getTrips();
 
 
                     String startTime = directList.get(0).getOrigTimeMin();
                     String endTime = directList.get(0).getDestTimeMin();
+
+                    String startTimeOneBack = oneBackList.get(0).getOrigTimeMin();
+                    String endTimeOneBack = oneBackList.get(0).getDestTimeMin();
+
+                    String startTimeToOneBack = toOneBackList.get(0).getOrigTimeMin();
+                    String endTimeToOneBack = toOneBackList.get(0).getDestTimeMin();
+
+                    Date startTimeOneBackAsDate = parseTime(startTimeOneBack);
+                    Date endTimeToOneBackAsDate = parseTime(endTimeToOneBack);
+                    if (startTimeOneBackAsDate.compareTo(endTimeToOneBackAsDate) > 0) {
+                        //Success
+                    }
+                    System.out.println("yes");
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -73,6 +102,16 @@ public class BacktrackAdapter extends RecyclerView.Adapter<BacktrackViewHolder> 
             }
         }.execute();
 
+    }
+
+    private Date parseTime(String timeString) {
+        Date date = null;
+        try {
+            date = mSimpleDateFormat.parse(timeString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
     @Override
